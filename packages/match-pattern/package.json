@@ -1,6 +1,6 @@
 {
   "name": "@ublacklist/match-pattern",
-  "version": "0.0.0",
+  "version": "1.0.0",
   "description": "A parser and lookup map for WebExtensions match patterns.",
   "keywords": [
     "match-pattern",
