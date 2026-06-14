@@ -1,6 +1,6 @@
 {
   "name": "@ublacklist/serpinfo",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "The SERPINFO format definition, parser, and schemas for uBlacklist.",
   "keywords": [
     "serpinfo",
