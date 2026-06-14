@@ -11,7 +11,7 @@
     "fix": "pnpm run /^fix:/",
     "fix:biome": "biome check --write",
     "fix:prettier": "prettier --write \"**/*.{md,yaml,yml}\"",
-    "release": "pnpm -r run build && pnpm -r publish --no-git-checks",
+    "release": "pnpm -r run build && pnpm changeset publish",
     "test": "pnpm -r run test"
   },
   "devDependencies": {
