@@ -1,9 +1,34 @@
 # @ublacklist/serpinfo
 
-This `0.0.1` is a placeholder release published only to bootstrap
-[npm trusted publishing (OIDC)](https://docs.npmjs.com/trusted-publishers).
+The SERPINFO format definition, parser, and schemas for [uBlacklist](https://github.com/iorate/ublacklist).
 
-The actual package — the SERPINFO format definition, parser, and schemas — is
-published from `1.0.0` onward via GitHub Actions.
+## Installation
 
-See <https://github.com/ublacklist/packages/tree/main/packages/serpinfo>.
+```shell
+npm install @ublacklist/serpinfo
+```
+
+## Usage
+
+```typescript
+import { parse } from "@ublacklist/serpinfo";
+
+const result = parse(`
+name: Example
+pages:
+  - name: example
+    matches:
+      - "*://*.example.com/*"
+    results: []
+`);
+
+if (result.success) {
+  console.log(result.data.name); // "Example"
+} else {
+  console.error(result.error);
+}
+```
+
+## License
+
+[MIT](https://github.com/ublacklist/packages/blob/main/LICENSE)

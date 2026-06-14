@@ -1,14 +1,43 @@
 {
   "name": "@ublacklist/serpinfo",
   "version": "0.0.1",
-  "description": "Placeholder release. See 1.0.0 for the actual package.",
-  "license": "MIT",
+  "description": "The SERPINFO format definition, parser, and schemas for uBlacklist.",
+  "keywords": [
+    "serpinfo",
+    "ublacklist"
+  ],
+  "homepage": "https://github.com/ublacklist/packages/tree/main/packages/serpinfo#readme",
+  "bugs": "https://github.com/ublacklist/packages/issues",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/ublacklist/packages.git",
     "directory": "packages/serpinfo"
   },
-  "publishConfig": {
-    "access": "public"
+  "license": "MIT",
+  "author": "iorate",
+  "type": "module",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsgo --project tsconfig.build.json",
+    "test": "node --test \"src/**/*.test.ts\""
+  },
+  "dependencies": {
+    "@ublacklist/match-pattern": "workspace:^",
+    "css-tree": "^3.2.1",
+    "js-yaml": "^4.1.1",
+    "zod": "^4.4.3",
+    "zod-validation-error": "^5.0.0"
+  },
+  "devDependencies": {
+    "@types/css-tree": "^2.3.11",
+    "@types/js-yaml": "^4.0.9"
   }
 }
