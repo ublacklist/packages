@@ -1,0 +1,32 @@
+{
+  "name": "@ublacklist/packages",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "pnpm -r run build",
+    "check": "pnpm run /^check:/",
+    "check:biome": "biome check",
+    "check:prettier": "prettier --check \"**/*.{md,yaml,yml}\"",
+    "check:typescript": "tsgo",
+    "fix": "pnpm run /^fix:/",
+    "fix:biome": "biome check --write",
+    "fix:prettier": "prettier --write \"**/*.{md,yaml,yml}\"",
+    "test": "pnpm -r run test"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "^2.4.15",
+    "@changesets/cli": "^2.31.0",
+    "@types/node": "^24.13.2",
+    "@typescript/native-preview": "7.0.0-dev.20260421.2",
+    "lefthook": "^2.1.9",
+    "prettier": "^3.8.4"
+  },
+  "packageManager": "pnpm@11.6.0",
+  "devEngines": {
+    "runtime": {
+      "name": "node",
+      "version": "^24.16.0",
+      "onFail": "download"
+    }
+  }
+}

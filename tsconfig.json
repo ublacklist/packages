@@ -1,0 +1,28 @@
+{
+  "exclude": ["**/dist", "node_modules"],
+
+  "compilerOptions": {
+    // Type Checking
+    "exactOptionalPropertyTypes": true,
+    "noUncheckedIndexedAccess": true,
+
+    // Modules
+    "allowImportingTsExtensions": true,
+    "module": "nodenext",
+    "types": ["node"],
+
+    // Emit
+    "noEmit": true,
+
+    // Interop Constraints
+    "erasableSyntaxOnly": true,
+    "isolatedModules": true,
+    "verbatimModuleSyntax": true,
+
+    // Language and Environment
+    "target": "esnext",
+
+    // Completeness
+    "skipLibCheck": true
+  }
+}
