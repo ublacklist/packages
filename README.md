@@ -7,6 +7,7 @@ A monorepo of packages extracted from the [uBlacklist](https://github.com/iorate
 | Package                                                    | Description                                               |
 | ---------------------------------------------------------- | --------------------------------------------------------- |
 | [@ublacklist/match-pattern](packages/match-pattern#readme) | A parser and lookup map for WebExtensions match patterns. |
+| [@ublacklist/serpinfo](packages/serpinfo#readme)           | The SERPINFO format definition, parser, and schemas.      |
 
 ## Development
 
