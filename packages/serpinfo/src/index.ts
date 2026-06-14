@@ -1,19 +1,13 @@
-export {
-  type ButtonCommand,
-  buttonCommandSchema,
-  type ElementCommand,
-  elementCommandSchema,
-  type PropertyCommand,
-  propertyCommandSchema,
-  type RootCommand,
-  rootCommandSchema,
+export type {
+  ButtonCommand,
+  ElementCommand,
+  PropertyCommand,
+  RootCommand,
 } from "./commands.ts";
 export { type ParseResult, parse } from "./parse.ts";
-export {
-  type ResultDescription,
-  type SerpDescription,
-  type SerpInfo,
-  type SerpInfoStrict,
-  serpInfoSchema,
-  serpInfoStrictSchema,
+export type {
+  ResultDescription,
+  SerpDescription,
+  SerpInfo,
+  SerpInfoStrict,
 } from "./types.ts";
