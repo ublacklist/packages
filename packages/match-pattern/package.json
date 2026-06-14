@@ -18,10 +18,7 @@
   "author": "iorate",
   "type": "module",
   "exports": {
-    ".": {
-      "types": "./dist/index.d.ts",
-      "default": "./dist/index.js"
-    }
+    ".": "./src/index.ts"
   },
   "files": [
     "dist"
@@ -29,5 +26,13 @@
   "scripts": {
     "build": "tsgo --project tsconfig.build.json",
     "test": "node --test \"src/**/*.test.ts\""
+  },
+  "publishConfig": {
+    "exports": {
+      ".": {
+        "types": "./dist/index.d.ts",
+        "default": "./dist/index.js"
+      }
+    }
   }
 }
