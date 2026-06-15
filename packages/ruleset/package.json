@@ -1,14 +1,53 @@
 {
   "name": "@ublacklist/ruleset",
   "version": "0.0.1",
-  "description": "Placeholder release. See 1.0.0 for the actual package.",
-  "license": "MIT",
+  "description": "The ruleset format definition and parser for uBlacklist.",
+  "keywords": [
+    "ruleset",
+    "ublacklist"
+  ],
+  "homepage": "https://github.com/ublacklist/packages/tree/main/packages/ruleset#readme",
+  "bugs": "https://github.com/ublacklist/packages/issues",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/ublacklist/packages.git",
     "directory": "packages/ruleset"
   },
+  "license": "MIT",
+  "author": "iorate",
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsgo --project tsconfig.build.json",
+    "generate": "pnpm run \"/^generate:/\"",
+    "generate:frontmatter-parser": "lezer-generator src/frontmatter.grammar -o src/frontmatter.grammar.ts --noTerms --typeScript",
+    "generate:ruleset-parser": "lezer-generator src/ruleset.grammar -o src/ruleset.grammar.ts --noTerms --typeScript",
+    "test": "node --test \"src/**/*.test.ts\""
+  },
+  "dependencies": {
+    "@lezer/common": "^1.5.2",
+    "@lezer/highlight": "^1.2.3",
+    "@lezer/lr": "^1.4.10",
+    "@lezer/yaml": "^1.0.4",
+    "@ublacklist/match-pattern": "workspace:^",
+    "js-yaml": "^4.1.1",
+    "zod": "^4.4.3"
+  },
+  "devDependencies": {
+    "@lezer/generator": "^1.8.0",
+    "@types/js-yaml": "^4.0.9"
+  },
   "publishConfig": {
-    "access": "public"
+    "exports": {
+      ".": {
+        "types": "./dist/index.d.ts",
+        "default": "./dist/index.js"
+      }
+    }
   }
 }

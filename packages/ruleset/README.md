@@ -1,9 +1,27 @@
 # @ublacklist/ruleset
 
-This `0.0.1` is a placeholder release published only to bootstrap
-[npm trusted publishing (OIDC)](https://docs.npmjs.com/trusted-publishers).
+The ruleset format definition and parser for [uBlacklist](https://github.com/iorate/ublacklist).
 
-The actual package — the ruleset format definition and parser — is
-published from `1.0.0` onward via GitHub Actions.
+## Installation
 
-See <https://github.com/ublacklist/packages/tree/main/packages/ruleset>.
+```shell
+npm install @ublacklist/ruleset
+```
+
+## Usage
+
+```typescript
+import { Ruleset } from "@ublacklist/ruleset";
+
+const ruleset = new Ruleset(`
+*://*.example.com/*
+@1 title=~/sponsored/i
+`);
+
+ruleset.test({ url: "https://www.example.com/" }); // true
+ruleset.test({ url: "https://www.example.net/" }); // false
+```
+
+## License
+
+[MIT](https://github.com/ublacklist/packages/blob/main/LICENSE)
