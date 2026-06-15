@@ -1,6 +1,6 @@
 import assert from "node:assert/strict";
 import { test } from "node:test";
-import { MatchPatternMap } from "./index.ts";
+import { MatchPatternMap, matchPatternTest } from "./index.ts";
 
 function get(map: MatchPatternMap<number>, url: string) {
   return map.get(url).sort();
@@ -159,4 +159,21 @@ test("MatchPatternMap", async (t) => {
     assert.deepEqual(get(map, "http://a.b.mozilla.org/"), [0, 1, 2]);
     assert.deepEqual(get(map, "https://b.mozilla.org/path/"), [0, 1, 2, 6]);
   });
+});
+
+test("matchPatternTest", () => {
+  assert.ok(matchPatternTest("<all_urls>", "https://example.com/"));
+  assert.ok(!matchPatternTest("<all_urls>", "ws://example.com/"));
+  assert.ok(matchPatternTest("*://*.mozilla.org/*", "https://a.mozilla.org/"));
+  assert.ok(matchPatternTest("*://*.mozilla.org/*", "https://mozilla.org/"));
+  assert.ok(!matchPatternTest("*://*.mozilla.org/*", "https://example.com/"));
+  // Scheme `*` matches only http and https
+  assert.ok(!matchPatternTest("*://mozilla.org/", "ftp://mozilla.org/"));
+  // Invalid or unsupported patterns throw, as with `MatchPatternMap.set`
+  assert.throws(() =>
+    matchPatternTest("ftp://mozilla.org/", "ftp://mozilla.org/"),
+  );
+  assert.throws(() =>
+    matchPatternTest("not a pattern", "https://example.com/"),
+  );
 });
