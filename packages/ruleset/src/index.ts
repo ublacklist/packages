@@ -1,4 +1,4 @@
-export { parser } from "./parser.ts";
+export { bodyParser, parser } from "./parser.ts";
 export {
   type Action,
   type ExecResult,

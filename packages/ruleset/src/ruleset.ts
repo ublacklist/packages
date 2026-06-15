@@ -5,8 +5,7 @@ import {
 } from "@ublacklist/match-pattern";
 import yaml from "js-yaml";
 import { z } from "zod";
-import { parser } from "./parser.ts";
-import { parser as bodyParser } from "./ruleset.grammar.ts";
+import { bodyParser, parser } from "./parser.ts";
 import { Text } from "./text.ts";
 import { parseRegExp, parseString } from "./utils.ts";
 
