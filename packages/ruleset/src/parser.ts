@@ -4,7 +4,7 @@ import { parser as yamlParser } from "@lezer/yaml";
 import { parser as frontmatterParser } from "./frontmatter.grammar.ts";
 import { parser as _bodyParser } from "./ruleset.grammar.ts";
 
-const bodyParser = _bodyParser.configure({
+export const bodyParser = _bodyParser.configure({
   props: [
     styleTags({
       Comment: t.lineComment,
