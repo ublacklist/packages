@@ -1,0 +1,14 @@
+{
+  "name": "@ublacklist/ruleset",
+  "version": "0.0.1",
+  "description": "Placeholder release. See 1.0.0 for the actual package.",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ublacklist/packages.git",
+    "directory": "packages/ruleset"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}
