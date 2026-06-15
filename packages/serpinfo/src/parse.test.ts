@@ -1,6 +1,6 @@
-import assert from "node:assert";
+import assert from "node:assert/strict";
 import { test } from "node:test";
-import { parse } from "./index.ts";
+import { parse } from "./parse.ts";
 
 test("parse", async (t) => {
   await t.test("parses a valid SERPINFO document", () => {
@@ -17,24 +17,22 @@ pages:
           title: h3
 `);
     assert.ok(result.success);
-    assert.strictEqual(result.data.name, "Example");
-    assert.strictEqual(result.data.pages.length, 1);
-    assert.deepStrictEqual(result.data.pages[0]?.matches, [
-      "*://*.example.com/*",
-    ]);
-    assert.strictEqual(result.data.pages[0]?.results[0]?.url, "a.url");
+    assert.equal(result.data.name, "Example");
+    assert.equal(result.data.pages.length, 1);
+    assert.deepEqual(result.data.pages[0]?.matches, ["*://*.example.com/*"]);
+    assert.equal(result.data.pages[0]?.results[0]?.url, "a.url");
   });
 
   await t.test("reports a YAML syntax error", () => {
     const result = parse("name: Example\n\tpages: []");
     assert.ok(!result.success);
-    assert.strictEqual(typeof result.error, "string");
+    assert.equal(typeof result.error, "string");
   });
 
   await t.test("reports a schema validation error", () => {
     const result = parse("name: Example");
     assert.ok(!result.success);
-    assert.strictEqual(typeof result.error, "string");
+    assert.equal(typeof result.error, "string");
   });
 
   await t.test("rejects an invalid match pattern", () => {
@@ -60,7 +58,7 @@ pages:
       - {}
 `);
     assert.ok(result.success);
-    assert.deepStrictEqual(result.data.pages[0]?.results, [null]);
+    assert.deepEqual(result.data.pages[0]?.results, [null]);
   });
 
   await t.test("rejects an invalid result in strict mode", () => {
