@@ -1,4 +1,4 @@
-import assert from "node:assert";
+import assert from "node:assert/strict";
 import { test } from "node:test";
 import { type ExecResult, Ruleset } from "./ruleset.ts";
 
@@ -696,32 +696,25 @@ test("Ruleset", async (t) => {
   await t.test("Unblock and highlight specifiers", () => {
     {
       const ruleset = new Ruleset("@*://example.com/*");
-      assert.deepStrictEqual(exec(ruleset, { url: "https://example.com/" }), [
+      assert.deepEqual(exec(ruleset, { url: "https://example.com/" }), [
         { lineNumber: 1, action: { type: "unblock" } },
       ]);
-      assert.deepStrictEqual(
-        exec(ruleset, { url: "https://example.net/" }),
-        [],
-      );
+      assert.deepEqual(exec(ruleset, { url: "https://example.net/" }), []);
     }
     {
       const ruleset = new Ruleset(String.raw`@1 /example\.net/`);
-      assert.deepStrictEqual(
-        exec(ruleset, { url: "http://www.example.net/" }),
-        [{ lineNumber: 1, action: { type: "highlight", colorNumber: 1 } }],
-      );
-      assert.deepStrictEqual(
-        exec(ruleset, { url: "http://www.example.com/" }),
-        [],
-      );
+      assert.deepEqual(exec(ruleset, { url: "http://www.example.net/" }), [
+        { lineNumber: 1, action: { type: "highlight", colorNumber: 1 } },
+      ]);
+      assert.deepEqual(exec(ruleset, { url: "http://www.example.com/" }), []);
     }
     {
       const ruleset = new Ruleset("@10t/bar/i");
-      assert.deepStrictEqual(
+      assert.deepEqual(
         exec(ruleset, { url: "http://example.com/", title: "FOO BAR BAZ" }),
         [{ lineNumber: 1, action: { type: "highlight", colorNumber: 10 } }],
       );
-      assert.deepStrictEqual(
+      assert.deepEqual(
         exec(ruleset, {
           url: "http://example.com/foo/bar/baz/",
           title: "QUX QUUX",
@@ -732,10 +725,7 @@ test("Ruleset", async (t) => {
     // Invalid highlight specifier
     {
       const ruleset = new Ruleset(String.raw`@ 1 /example\.net/`);
-      assert.deepStrictEqual(
-        exec(ruleset, { url: "http://www.example.net/" }),
-        [],
-      );
+      assert.deepEqual(exec(ruleset, { url: "http://www.example.net/" }), []);
     }
   });
 
@@ -794,29 +784,23 @@ test("Ruleset", async (t) => {
 @4http://a.b.example.com/*
 @5http://*.b.example.com/*/b/*/
 *://example.com/*`);
-      assert.deepStrictEqual(exec(ruleset, { url: "https://example.com/" }), [
+      assert.deepEqual(exec(ruleset, { url: "https://example.com/" }), [
         { lineNumber: 1, action: { type: "block" } },
         { lineNumber: 2, action: { type: "unblock" } },
         { lineNumber: 4, action: { type: "highlight", colorNumber: 2 } },
         { lineNumber: 8, action: { type: "block" } },
       ]);
-      assert.deepStrictEqual(
-        exec(ruleset, { url: "http://www.example.com/path" }),
-        [
-          { lineNumber: 3, action: { type: "highlight", colorNumber: 1 } },
-          { lineNumber: 4, action: { type: "highlight", colorNumber: 2 } },
-        ],
-      );
-      assert.deepStrictEqual(
-        exec(ruleset, { url: "http://example.com/path" }),
-        [
-          { lineNumber: 1, action: { type: "block" } },
-          { lineNumber: 4, action: { type: "highlight", colorNumber: 2 } },
-          { lineNumber: 5, action: { type: "highlight", colorNumber: 3 } },
-          { lineNumber: 8, action: { type: "block" } },
-        ],
-      );
-      assert.deepStrictEqual(
+      assert.deepEqual(exec(ruleset, { url: "http://www.example.com/path" }), [
+        { lineNumber: 3, action: { type: "highlight", colorNumber: 1 } },
+        { lineNumber: 4, action: { type: "highlight", colorNumber: 2 } },
+      ]);
+      assert.deepEqual(exec(ruleset, { url: "http://example.com/path" }), [
+        { lineNumber: 1, action: { type: "block" } },
+        { lineNumber: 4, action: { type: "highlight", colorNumber: 2 } },
+        { lineNumber: 5, action: { type: "highlight", colorNumber: 3 } },
+        { lineNumber: 8, action: { type: "block" } },
+      ]);
+      assert.deepEqual(
         exec(ruleset, { url: "http://a.b.example.com/a/b/c/" }),
         [
           { lineNumber: 4, action: { type: "highlight", colorNumber: 2 } },
@@ -824,7 +808,7 @@ test("Ruleset", async (t) => {
           { lineNumber: 7, action: { type: "highlight", colorNumber: 5 } },
         ],
       );
-      assert.deepStrictEqual(
+      assert.deepEqual(
         exec(ruleset, { url: "https://example.net/a/b/c/" }),
         [],
       );
@@ -835,7 +819,7 @@ test("Ruleset", async (t) => {
 @1 url/www\.example\.com/
 @ t/example/
 title/domain/i`);
-      assert.deepStrictEqual(
+      assert.deepEqual(
         exec(ruleset, {
           url: "https://www.example.com",
           title: "Example Domain",
@@ -846,7 +830,7 @@ title/domain/i`);
           { lineNumber: 5, action: { type: "block" } },
         ],
       );
-      assert.deepStrictEqual(
+      assert.deepEqual(
         exec(ruleset, {
           url: "ftp://ftp.example.net",
           title: "ftp example",
@@ -866,14 +850,11 @@ example\.(net|org)
 
 # IPv4 address
 /^https?:\/\/(\d{1,3}\.){3}\d{1,3}\//`);
-      assert.deepStrictEqual(
-        exec(ruleset, { url: "https://example.com/foobar" }),
-        [
-          { lineNumber: 1, action: { type: "block" } },
-          { lineNumber: 8, action: { type: "unblock" } },
-        ],
-      );
-      assert.deepStrictEqual(
+      assert.deepEqual(exec(ruleset, { url: "https://example.com/foobar" }), [
+        { lineNumber: 1, action: { type: "block" } },
+        { lineNumber: 8, action: { type: "unblock" } },
+      ]);
+      assert.deepEqual(
         exec(ruleset, {
           url: "http://www.example.com/hogefuga",
           title: "qux quux",
@@ -883,7 +864,7 @@ example\.(net|org)
           { lineNumber: 7, action: { type: "highlight", colorNumber: 2 } },
         ],
       );
-      assert.deepStrictEqual(
+      assert.deepEqual(
         exec(ruleset, {
           url: "https://127.0.0.1/hoge/fuga/",
           title: "qux quux",
@@ -893,7 +874,7 @@ example\.(net|org)
           { lineNumber: 11, action: { type: "block" } },
         ],
       );
-      assert.deepStrictEqual(
+      assert.deepEqual(
         exec(ruleset, { url: "ftp://127.0.0.1/", title: "quux qux" }),
         [],
       );
@@ -905,26 +886,26 @@ example\.(net|org)
     const props1 = { url: "https://example.net/path" };
 
     ruleset.extend("");
-    assert.deepStrictEqual(exec(ruleset, props1), []);
+    assert.deepEqual(exec(ruleset, props1), []);
 
     ruleset.extend(String.raw`*://example.com/*
 @https://example.net/*
   @1 /example\.edu/
 *://*.net/*`);
-    assert.deepStrictEqual(exec(ruleset, props1), [
+    assert.deepEqual(exec(ruleset, props1), [
       { lineNumber: 2, action: { type: "unblock" } },
       { lineNumber: 4, action: { type: "block" } },
     ]);
 
     ruleset.extend("");
-    assert.deepStrictEqual(exec(ruleset, props1), [
+    assert.deepEqual(exec(ruleset, props1), [
       { lineNumber: 2, action: { type: "unblock" } },
       { lineNumber: 4, action: { type: "block" } },
     ]);
 
     ruleset.extend(`title/example/i
 @2*://*.example.net/path*`);
-    assert.deepStrictEqual(exec(ruleset, props1), [
+    assert.deepEqual(exec(ruleset, props1), [
       { lineNumber: 2, action: { type: "unblock" } },
       { lineNumber: 4, action: { type: "block" } },
       { lineNumber: 6, action: { type: "highlight", colorNumber: 2 } },
@@ -934,19 +915,19 @@ example\.(net|org)
       url: "https://example.com/",
       title: "**EXAMPLE**",
     };
-    assert.deepStrictEqual(exec(ruleset, props2), [
+    assert.deepEqual(exec(ruleset, props2), [
       { lineNumber: 1, action: { type: "block" } },
       { lineNumber: 5, action: { type: "block" } },
     ]);
 
     ruleset.extend("@*://*/*");
-    assert.deepStrictEqual(exec(ruleset, props1), [
+    assert.deepEqual(exec(ruleset, props1), [
       { lineNumber: 2, action: { type: "unblock" } },
       { lineNumber: 4, action: { type: "block" } },
       { lineNumber: 6, action: { type: "highlight", colorNumber: 2 } },
       { lineNumber: 7, action: { type: "unblock" } },
     ]);
-    assert.deepStrictEqual(exec(ruleset, props2), [
+    assert.deepEqual(exec(ruleset, props2), [
       { lineNumber: 1, action: { type: "block" } },
       { lineNumber: 5, action: { type: "block" } },
       { lineNumber: 7, action: { type: "unblock" } },
