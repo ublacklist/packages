@@ -1,5 +1,11 @@
 # @ublacklist/ruleset
 
+## 1.0.1
+
+### Patch Changes
+
+- 5698c34: Export `bodyParser`, the configured parser for ruleset bodies.
+
 ## 1.0.0
 
 ### Major Changes
