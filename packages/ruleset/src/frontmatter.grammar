@@ -1,0 +1,17 @@
+// Copied verbatim from @codemirror/lang-yaml (MIT licensed):
+// https://github.com/codemirror/lang-yaml/blob/main/src/frontmatter.grammar
+
+@precedence { frontmatter }
+
+@top Document { Frontmatter? Body }
+
+Frontmatter { DashLine FrontmatterContent { line* } DashLine }
+DashLine { !frontmatter dashLine }
+Body { (line | dashLine)* }
+
+@tokens {
+  lineEnd { "\r" | "\n" }
+  dashLine { "---" (lineEnd | @eof) }
+  line { ![\n\r]* lineEnd | ![\n\r]+ @eof }
+  @precedence { dashLine line }
+}

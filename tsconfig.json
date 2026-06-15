@@ -20,6 +20,7 @@
     "verbatimModuleSyntax": true,
 
     // Language and Environment
+    "lib": ["esnext"],
     "target": "esnext",
 
     // Completeness
