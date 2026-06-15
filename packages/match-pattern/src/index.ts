@@ -112,6 +112,12 @@ export class MatchPatternMap<T> {
   }
 }
 
+export function matchPatternTest(pattern: string, url: string): boolean {
+  const map = new MatchPatternMap<1>();
+  map.set(pattern, 1);
+  return map.get(url).length !== 0;
+}
+
 type HostMap<T> = [
   self: HostMapBucket<T>,
   anySubdomain: HostMapBucket<T>,
