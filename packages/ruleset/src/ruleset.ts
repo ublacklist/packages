@@ -76,16 +76,16 @@ export class Ruleset implements Iterable<string> {
   exec(result: Readonly<SearchResult>): ExecResult {
     const props = flatten(result);
     const matches: ExecResult = [];
-    for (const [lineNumber, value = -1, expression = null] of this.#ruleMap.get(
+    for (const [lineNumber, value = 1, expression = null] of this.#ruleMap.get(
       result.url,
     )) {
       if (!expression || execExpression(expression, props)) {
         const action: Action =
-          value === -1
+          value === 1
             ? { type: "block" }
             : value === 0
               ? { type: "unblock" }
-              : { type: "highlight", colorNumber: value };
+              : { type: "highlight", colorNumber: -value };
         matches.push({ lineNumber, action });
       }
     }
@@ -207,7 +207,7 @@ function collectRuleset(
         matchPattern ?? "<all_urls>",
         expression
           ? [lineNumber, value, expression]
-          : value !== -1
+          : value !== 1
             ? [lineNumber, value]
             : [lineNumber],
       );
@@ -235,11 +235,11 @@ function getValue(ruleNode: SyntaxNode, source: Text): number {
   }
   const highlightSpecifierNode = ruleNode.getChild("HighlightSpecifier");
   if (highlightSpecifierNode) {
-    return Number(
+    return -Number(
       source.slice(highlightSpecifierNode.from + 1, highlightSpecifierNode.to),
     );
   }
-  return -1;
+  return 1;
 }
 
 function getMatchPattern(ruleNode: SyntaxNode, source: Text): string | null {
