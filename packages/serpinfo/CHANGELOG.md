@@ -1,5 +1,11 @@
 # @ublacklist/serpinfo
 
+## 1.1.0
+
+### Minor Changes
+
+- 0719942: Add an optional `extraSelector` field to a result definition. It takes a CSS selector list where every top-level selector must reference the result root via the nesting selector `&`, validated with css-tree.
+
 ## 1.0.1
 
 ### Patch Changes
