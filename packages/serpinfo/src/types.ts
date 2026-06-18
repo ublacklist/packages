@@ -4,7 +4,11 @@ import {
   propertyCommandSchema,
   rootCommandSchema,
 } from "./commands.ts";
-import { matchPatternSchema, regexSchema } from "./schemas.ts";
+import {
+  extraSelectorSchema,
+  matchPatternSchema,
+  regexSchema,
+} from "./schemas.ts";
 
 const propNameSchema = z.string().regex(
   // Identifier { "$"? (@asciiLetter | "_") (@digit | @asciiLetter | "_")* }
@@ -21,6 +25,7 @@ const resultDescriptionSchema = z.object({
   props: z.record(propNameSchema, propertyCommandSchema).optional(),
   button: buttonCommandSchema.optional(),
   preserveSpace: z.boolean().optional(),
+  extraSelector: extraSelectorSchema.optional(),
 });
 
 export type SerpDescription = z.infer<typeof serpDescriptionSchema>;
