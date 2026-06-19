@@ -112,10 +112,19 @@ export class MatchPatternMap<T> {
   }
 }
 
-export function matchPatternTest(pattern: string, url: string): boolean {
-  const map = new MatchPatternMap<1>();
-  map.set(pattern, 1);
-  return map.get(url).length !== 0;
+export class MatchPattern {
+  constructor(patterns: readonly string[]) {
+    this.#map = new MatchPatternMap<true>();
+    for (const pattern of patterns) {
+      this.#map.set(pattern, true);
+    }
+  }
+
+  test(url: string): boolean {
+    return this.#map.get(url).length !== 0;
+  }
+
+  #map: MatchPatternMap<true>;
 }
 
 type HostMap<T> = [

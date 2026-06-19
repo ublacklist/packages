@@ -1,6 +1,6 @@
 import assert from "node:assert/strict";
 import { test } from "node:test";
-import { MatchPatternMap, matchPatternTest } from "./index.ts";
+import { MatchPattern, MatchPatternMap } from "./index.ts";
 
 function get(map: MatchPatternMap<number>, url: string) {
   return map.get(url).sort();
@@ -161,19 +161,42 @@ test("MatchPatternMap", async (t) => {
   });
 });
 
-test("matchPatternTest", () => {
-  assert.ok(matchPatternTest("<all_urls>", "https://example.com/"));
-  assert.ok(!matchPatternTest("<all_urls>", "ws://example.com/"));
-  assert.ok(matchPatternTest("*://*.mozilla.org/*", "https://a.mozilla.org/"));
-  assert.ok(matchPatternTest("*://*.mozilla.org/*", "https://mozilla.org/"));
-  assert.ok(!matchPatternTest("*://*.mozilla.org/*", "https://example.com/"));
-  // Scheme `*` matches only http and https
-  assert.ok(!matchPatternTest("*://mozilla.org/", "ftp://mozilla.org/"));
-  // Invalid or unsupported patterns throw, as with `MatchPatternMap.set`
-  assert.throws(() =>
-    matchPatternTest("ftp://mozilla.org/", "ftp://mozilla.org/"),
-  );
-  assert.throws(() =>
-    matchPatternTest("not a pattern", "https://example.com/"),
-  );
+test("MatchPattern", async (t) => {
+  await t.test("tests a URL against a single pattern", () => {
+    const pattern = new MatchPattern(["*://*.mozilla.org/*"]);
+    assert.ok(pattern.test("https://a.mozilla.org/"));
+    assert.ok(pattern.test("https://mozilla.org/"));
+    assert.ok(!pattern.test("https://example.com/"));
+  });
+
+  await t.test("matches if any of the patterns matches", () => {
+    const pattern = new MatchPattern([
+      "*://*.mozilla.org/*",
+      "https://example.com/*",
+    ]);
+    assert.ok(pattern.test("https://a.mozilla.org/"));
+    assert.ok(pattern.test("https://example.com/path"));
+    assert.ok(!pattern.test("https://example.org/"));
+  });
+
+  await t.test("matches nothing when there are no patterns", () => {
+    const pattern = new MatchPattern([]);
+    assert.ok(!pattern.test("https://example.com/"));
+  });
+
+  await t.test("handles <all_urls> and supported schemes", () => {
+    const pattern = new MatchPattern(["<all_urls>"]);
+    assert.ok(pattern.test("https://example.com/"));
+    assert.ok(!pattern.test("ws://example.com/"));
+  });
+
+  await t.test("scheme `*` matches only http and https", () => {
+    const pattern = new MatchPattern(["*://mozilla.org/"]);
+    assert.ok(!pattern.test("ftp://mozilla.org/"));
+  });
+
+  await t.test("throws on invalid or unsupported patterns", () => {
+    assert.throws(() => new MatchPattern(["ftp://mozilla.org/"]));
+    assert.throws(() => new MatchPattern(["not a pattern"]));
+  });
 });
