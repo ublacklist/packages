@@ -1,5 +1,12 @@
 # @ublacklist/match-pattern
 
+## 1.2.0
+
+### Minor Changes
+
+- c7337d5: Add a `MatchPattern` class that tests a URL against a set of match patterns. It builds a `MatchPatternMap` internally, so it stays efficient for multiple patterns.
+- c7337d5: Remove `matchPatternTest`. Use `new MatchPattern([pattern]).test(url)` instead.
+
 ## 1.1.0
 
 ### Minor Changes
