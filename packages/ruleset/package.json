@@ -39,8 +39,8 @@
     "zod": "^4.4.3"
   },
   "devDependencies": {
-    "@lezer/generator": "^1.8.0",
-    "@types/js-yaml": "^4.0.9"
+    "@lezer/generator": "1.8.0",
+    "@types/js-yaml": "4.0.9"
   },
   "publishConfig": {
     "exports": {
