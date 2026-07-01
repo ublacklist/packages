@@ -9,25 +9,25 @@ importers:
   .:
     devDependencies:
       '@biomejs/biome':
-        specifier: ^2.4.15
+        specifier: 2.5.0
         version: 2.5.0
       '@changesets/cli':
-        specifier: ^2.31.0
+        specifier: 2.31.0
         version: 2.31.0(@types/node@24.13.2)
       '@types/node':
-        specifier: ^24.13.2
+        specifier: 24.13.2
         version: 24.13.2
       '@typescript/native-preview':
         specifier: 7.0.0-dev.20260421.2
         version: 7.0.0-dev.20260421.2
       lefthook:
-        specifier: ^2.1.9
+        specifier: 2.1.9
         version: 2.1.9
       node:
         specifier: runtime:^24.16.0
         version: runtime:24.16.0
       prettier:
-        specifier: ^3.8.4
+        specifier: 3.8.4
         version: 3.8.4
 
   packages/match-pattern: {}
@@ -57,10 +57,10 @@ importers:
         version: 4.4.3
     devDependencies:
       '@lezer/generator':
-        specifier: ^1.8.0
+        specifier: 1.8.0
         version: 1.8.0
       '@types/js-yaml':
-        specifier: ^4.0.9
+        specifier: 4.0.9
         version: 4.0.9
 
   packages/serpinfo:
@@ -82,10 +82,10 @@ importers:
         version: 5.0.0(zod@4.4.3)
     devDependencies:
       '@types/css-tree':
-        specifier: ^2.3.11
+        specifier: 2.3.11
         version: 2.3.11
       '@types/js-yaml':
-        specifier: ^4.0.9
+        specifier: 4.0.9
         version: 4.0.9
 
 packages:
