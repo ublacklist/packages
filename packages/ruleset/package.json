@@ -23,7 +23,7 @@
     "dist"
   ],
   "scripts": {
-    "build": "tsgo --project tsconfig.build.json",
+    "build": "tsc --project tsconfig.build.json",
     "generate": "pnpm run \"/^generate:/\"",
     "generate:frontmatter-parser": "lezer-generator src/frontmatter.grammar -o src/frontmatter.grammar.ts --noTerms --typeScript",
     "generate:ruleset-parser": "lezer-generator src/ruleset.grammar -o src/ruleset.grammar.ts --noTerms --typeScript",

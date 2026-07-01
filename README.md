@@ -13,13 +13,13 @@ A monorepo of packages extracted from the [uBlacklist](https://github.com/iorate
 ## Development
 
 ```shell
-# Install dependencies (pnpm >= 11 required)
+# Install dependencies (pnpm >= 10 required)
 pnpm install
 
 # Build all packages
 pnpm build
 
-# Run all checks (biome, prettier, tsgo)
+# Run all checks (biome, prettier, typescript)
 pnpm check
 
 # Run tests
