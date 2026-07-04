@@ -1,5 +1,11 @@
 # @ublacklist/serpinfo
 
+## 1.1.1
+
+### Patch Changes
+
+- 343e8f4: Update js-yaml to v5. Switch to a namespace import since js-yaml v5 no longer provides a default export. Behavior is unchanged.
+
 ## 1.1.0
 
 ### Minor Changes
