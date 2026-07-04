@@ -59,9 +59,6 @@ importers:
       '@lezer/generator':
         specifier: 1.8.0
         version: 1.8.0
-      '@types/js-yaml':
-        specifier: 4.0.9
-        version: 4.0.9
 
   packages/serpinfo:
     dependencies:
@@ -84,9 +81,6 @@ importers:
       '@types/css-tree':
         specifier: 2.3.11
         version: 2.3.11
-      '@types/js-yaml':
-        specifier: 4.0.9
-        version: 4.0.9
 
 packages:
 
@@ -251,9 +245,6 @@ packages:
 
   '@types/css-tree@2.3.11':
     resolution: {integrity: sha512-aEokibJOI77uIlqoBOkVbaQGC9zII0A+JH1kcTNKW2CwyYWD8KM6qdo+4c77wD3wZOQfJuNWAr9M4hdk+YhDIg==}
-
-  '@types/js-yaml@4.0.9':
-    resolution: {integrity: sha512-k4MGaQl5TGo/iipqb2UDG2UwjXziSWkh0uysQelTlJpX1qGlpUZYm8PnO4DxG1qBomtJUdYJ6qR6xdIah10JLg==}
 
   '@types/node@12.20.55':
     resolution: {integrity: sha512-J8xLz7q2OFulZ2cyGTLE1TbbZcjpno7FaN6zdJNrgAdrJ+DZzh/uFR6YrTb4C+nXakvud8Q4+rbhoIWlYQbUFQ==}
@@ -1114,8 +1105,6 @@ snapshots:
       fastq: 1.20.1
 
   '@types/css-tree@2.3.11': {}
-
-  '@types/js-yaml@4.0.9': {}
 
   '@types/node@12.20.55': {}
 

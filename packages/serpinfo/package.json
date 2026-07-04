@@ -34,8 +34,7 @@
     "zod-validation-error": "^5.0.0"
   },
   "devDependencies": {
-    "@types/css-tree": "2.3.11",
-    "@types/js-yaml": "4.0.9"
+    "@types/css-tree": "2.3.11"
   },
   "publishConfig": {
     "exports": {

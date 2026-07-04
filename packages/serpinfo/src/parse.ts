@@ -1,4 +1,4 @@
-import yaml from "js-yaml";
+import * as yaml from "js-yaml";
 import { createMessageBuilder, fromZodError } from "zod-validation-error";
 import {
   type SerpInfo,
