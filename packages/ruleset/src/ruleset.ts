@@ -3,7 +3,7 @@ import {
   MatchPatternMap,
   type MatchPatternMapJSON,
 } from "@ublacklist/match-pattern";
-import yaml from "js-yaml";
+import * as yaml from "js-yaml";
 import { z } from "zod";
 import { bodyParser, parser } from "./parser.ts";
 import { Text } from "./text.ts";
