@@ -29,6 +29,10 @@ if (result.success) {
 }
 ```
 
+## Documentation
+
+See the [SERPINFO specification](https://github.com/ublacklist/packages/blob/main/packages/serpinfo/docs/spec.md) for the full format.
+
 ## License
 
 [MIT](https://github.com/ublacklist/packages/blob/main/LICENSE)
