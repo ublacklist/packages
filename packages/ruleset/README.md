@@ -22,6 +22,10 @@ ruleset.test({ url: "https://www.example.com/" }); // true
 ruleset.test({ url: "https://www.example.net/" }); // false
 ```
 
+## Documentation
+
+See the [ruleset specification](https://github.com/ublacklist/packages/blob/main/packages/ruleset/docs/spec.md) for the full syntax.
+
 ## License
 
 [MIT](https://github.com/ublacklist/packages/blob/main/LICENSE)
