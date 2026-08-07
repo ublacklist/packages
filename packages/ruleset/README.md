@@ -24,7 +24,7 @@ ruleset.test({ url: "https://www.example.net/" }); // false
 
 ## Documentation
 
-See the [ruleset specification](https://github.com/ublacklist/packages/blob/main/packages/ruleset/docs/spec.md) for the full syntax.
+See the [ruleset specification](https://github.com/ublacklist/packages/blob/main/packages/ruleset/skills/ublacklist-ruleset/spec.md) for the full syntax.
 
 ## License
 
