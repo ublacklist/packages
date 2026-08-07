@@ -1,6 +1,6 @@
 {
   "name": "@ublacklist/ruleset",
-  "version": "1.0.3",
+  "version": "2.0.0",
   "description": "The ruleset format definition and parser for uBlacklist.",
   "keywords": [
     "ruleset",
