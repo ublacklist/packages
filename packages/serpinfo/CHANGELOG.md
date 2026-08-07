@@ -1,5 +1,17 @@
 # @ublacklist/serpinfo
 
+## 2.0.0
+
+### Major Changes
+
+- d7a672c: Declare the removal of the internal zod schemas (`*CommandSchema`, `serpInfoSchema`, `serpInfoStrictSchema`) as a breaking change. They were removed in v1.0.1, which should have been a major release. v2.0.0 is identical to v1.1.1 in code; use the `parse` function and the exported types instead of the schemas.
+
+### Patch Changes
+
+- Updated dependencies [d7a672c]
+- Updated dependencies [d7a672c]
+  - @ublacklist/match-pattern@2.0.0
+
 ## 1.1.1
 
 ### Patch Changes
