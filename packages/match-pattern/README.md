@@ -11,10 +11,21 @@ npm install @ublacklist/match-pattern
 ## Usage
 
 ```typescript
-import { MatchPatternMap, parseMatchPattern } from "@ublacklist/match-pattern";
+import {
+  MatchPattern,
+  MatchPatternMap,
+  parseMatchPattern,
+} from "@ublacklist/match-pattern";
 
 parseMatchPattern("*://*.example.com/*");
 // { allURLs: false, scheme: "*", host: "*.example.com", path: "/*" }
+
+const pattern = new MatchPattern([
+  "*://*.example.com/*",
+  "https://example.net/*",
+]);
+pattern.test("https://www.example.com/"); // true
+pattern.test("https://example.org/"); // false
 
 const map = new MatchPatternMap<number>();
 map.set("*://*.example.com/*", 1);
