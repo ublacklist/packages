@@ -131,7 +131,7 @@ $site = "google" & host = "youtube.com"
 $category = "images" & host = "www.amazon.com"
 ```
 
-See the [ruleset specification](../../ruleset/docs/spec.md) for the rule language.
+See the [ruleset specification](https://github.com/ublacklist/packages/blob/main/packages/ruleset/skills/ublacklist-ruleset/spec.md) for the rule language.
 
 ## Example
 
