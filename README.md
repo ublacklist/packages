@@ -25,25 +25,6 @@ Install them with the [GitHub CLI](https://cli.github.com/):
 gh skill install ublacklist/packages
 ```
 
-## Development
-
-```shell
-# Install dependencies (pnpm >= 10 required)
-pnpm install
-
-# Build all packages
-pnpm build
-
-# Run all checks (oxlint and oxfmt)
-pnpm check
-
-# Run tests
-pnpm test
-
-# Fix linting/formatting issues
-pnpm fix
-```
-
 ## License
 
 [MIT](LICENSE)
