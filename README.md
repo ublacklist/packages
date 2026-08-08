@@ -34,7 +34,7 @@ pnpm install
 # Build all packages
 pnpm build
 
-# Run all checks (biome, prettier, typescript)
+# Run all checks (oxlint and oxfmt)
 pnpm check
 
 # Run tests

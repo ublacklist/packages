@@ -23,7 +23,6 @@ export class Text implements Iterable<string> {
       );
     }
     const starts = this.#getLineStarts();
-    // biome-ignore lint/style/noNonNullAssertion: `n` is a valid line number
     const from = starts[n - 1]!;
     const to = starts[n];
     return this.#text.slice(from, to === undefined ? undefined : to - 1);
@@ -40,7 +39,6 @@ export class Text implements Iterable<string> {
     let hi = starts.length - 1;
     while (lo < hi) {
       const mid = Math.ceil((lo + hi) / 2);
-      // biome-ignore lint/style/noNonNullAssertion: `mid` is in range
       if (starts[mid]! <= pos) {
         lo = mid;
       } else {

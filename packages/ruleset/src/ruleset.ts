@@ -44,7 +44,6 @@ export class Ruleset implements Iterable<string> {
       const tree = parser.parse(this.#source.toString());
       const frontmatterNode = tree.topNode.getChild("Frontmatter");
       if (frontmatterNode) {
-        // biome-ignore lint/style/noNonNullAssertion: "Frontmatter" always has "Stream"
         const streamNode = frontmatterNode.getChild("Stream")!;
         const stream = this.#source.slice(streamNode.from, streamNode.to);
         try {
@@ -254,7 +253,6 @@ function getMatchPattern(ruleNode: SyntaxNode, source: Text): string | null {
 function getExpression(ruleNode: SyntaxNode, source: Text): Expression | null {
   const ifSpecifierNode = ruleNode.getChild("IfSpecifier");
   if (ifSpecifierNode) {
-    // biome-ignore lint/style/noNonNullAssertion: "IfSpecifier" always has "Expression"
     return collectExpression(ifSpecifierNode.getChild("Expression")!, source);
   }
   const expressionNode = ruleNode.getChild("Expression");
@@ -286,14 +284,12 @@ function collectExpression(
         stringMatchOperatorNode.from,
         stringMatchOperatorNode.to,
       ) as "=" | "^=" | "$=" | "*=";
-      // biome-ignore lint/style/noNonNullAssertion: "StringMatchOperator" is always followed by "String"
       const stringNode = expressionNode.getChild("String")!;
       const string = parseString(source.slice(stringNode.from, stringNode.to));
       const caseInsensitive =
         expressionNode.getChild("CaseSensitivity") != null;
       return [caseInsensitive ? `${operator}i` : operator, identifier, string];
     }
-    // biome-ignore lint/style/noNonNullAssertion: If "StringMatchOperator" is not present, "RegExp" is present
     const regExpNode = expressionNode.getChild("RegExp")!;
     const { pattern, flags } = parseRegExp(
       source.slice(regExpNode.from, regExpNode.to),
@@ -301,13 +297,11 @@ function collectExpression(
     return ["=~", identifier, flags ? [pattern, flags] : [pattern]];
   }
   if (expressionNode.name === "ParenthesizedExpression") {
-    // biome-ignore lint/style/noNonNullAssertion: "ParenthesizedExpression" always has "Expression"
     return collectExpression(expressionNode.getChild("Expression")!, source);
   }
   if (expressionNode.name === "NegateExpression") {
     return [
       "!",
-      // biome-ignore lint/style/noNonNullAssertion: "NegateExpression" always has "Expression"
       collectExpression(expressionNode.getChild("Expression")!, source),
     ];
   }
@@ -315,9 +309,7 @@ function collectExpression(
     const [leftNode, rightNode] = expressionNode.getChildren("Expression");
     return [
       "&",
-      // biome-ignore lint/style/noNonNullAssertion: "AndExpression" always has two "Expression"s
       collectExpression(leftNode!, source),
-      // biome-ignore lint/style/noNonNullAssertion: "AndExpression" always has two "Expression"s
       collectExpression(rightNode!, source),
     ];
   }
@@ -326,9 +318,7 @@ function collectExpression(
     const [leftNode, rightNode] = expressionNode.getChildren("Expression");
     return [
       "|",
-      // biome-ignore lint/style/noNonNullAssertion: "OrExpression" always has two "Expression"s
       collectExpression(leftNode!, source),
-      // biome-ignore lint/style/noNonNullAssertion: "OrExpression" always has two "Expression"s
       collectExpression(rightNode!, source),
     ];
   }
@@ -367,37 +357,31 @@ function execExpression(
   }
   if (expression[0] === "^=") {
     const prop = getProp(props, expression[1]);
-    // biome-ignore lint/complexity/useOptionalChain: Return a boolean value
     return prop != null && prop.startsWith(expression[2]);
   }
   if (expression[0] === "^=i") {
     const prop = getProp(props, expression[1]);
     return (
-      // biome-ignore lint/complexity/useOptionalChain: Return a boolean value
       prop != null && prop.toLowerCase().startsWith(expression[2].toLowerCase())
     );
   }
   if (expression[0] === "$=") {
     const prop = getProp(props, expression[1]);
-    // biome-ignore lint/complexity/useOptionalChain: Return a boolean value
     return prop != null && prop.endsWith(expression[2]);
   }
   if (expression[0] === "$=i") {
     const prop = getProp(props, expression[1]);
     return (
-      // biome-ignore lint/complexity/useOptionalChain: Return a boolean value
       prop != null && prop.toLowerCase().endsWith(expression[2].toLowerCase())
     );
   }
   if (expression[0] === "*=") {
     const prop = getProp(props, expression[1]);
-    // biome-ignore lint/complexity/useOptionalChain: Return a boolean value
     return prop != null && prop.includes(expression[2]);
   }
   if (expression[0] === "*=i") {
     const prop = getProp(props, expression[1]);
     return (
-      // biome-ignore lint/complexity/useOptionalChain: Return a boolean value
       prop != null && prop.toLowerCase().includes(expression[2].toLowerCase())
     );
   }
@@ -421,10 +405,7 @@ function execExpression(
 }
 
 function getProp(props: Readonly<Props>, name: string): string | null {
-  return Object.hasOwn(props, name)
-    ? // biome-ignore lint/style/noNonNullAssertion: `props` has `name`
-      props[name]!
-    : null;
+  return Object.hasOwn(props, name) ? props[name]! : null;
 }
 
 function plainRegExpTest(regExp: PlainRegExp, string: string): boolean {
