@@ -4,7 +4,6 @@ export function parseString(string: string): string {
     .replaceAll(
       /\\(?:0[0-9]?|u(?:[0-9A-Fa-f]{4}|\{(?:10[0-9A-Fa-f]{4}|0[0-9A-Fa-f]{5}|[0-9A-Fa-f]{1,5})\})?|x(?:[0-9A-Fa-f]{2})?|.)/g,
       (s: string): string => {
-        // biome-ignore lint/style/noNonNullAssertion: The regular expression guarantees that `s` has at least two characters
         const c = s[1]!;
         if (c === "0") {
           if (s.length > 2) {

@@ -173,6 +173,5 @@ function testPath(pathPattern: string, path: string): boolean {
     }
     pos = partPos + part.length;
   }
-  // biome-ignore lint/style/noNonNullAssertion: `rest` is not empty
   return path.slice(pos).endsWith(rest[rest.length - 1]!);
 }
