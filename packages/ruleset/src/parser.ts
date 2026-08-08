@@ -1,6 +1,7 @@
 import { parseMixed } from "@lezer/common";
 import { styleTags, tags as t } from "@lezer/highlight";
 import { parser as yamlParser } from "@lezer/yaml";
+
 import { parser as frontmatterParser } from "./frontmatter.grammar.ts";
 import { parser as _bodyParser } from "./ruleset.grammar.ts";
 

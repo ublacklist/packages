@@ -4,28 +4,24 @@
   "description": "A parser and lookup map for WebExtensions match patterns.",
   "keywords": [
     "match-pattern",
-    "webextensions",
-    "ublacklist"
+    "ublacklist",
+    "webextensions"
   ],
   "homepage": "https://github.com/ublacklist/packages/tree/main/packages/match-pattern#readme",
   "bugs": "https://github.com/ublacklist/packages/issues",
+  "license": "MIT",
+  "author": "iorate",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/ublacklist/packages.git",
     "directory": "packages/match-pattern"
   },
-  "license": "MIT",
-  "author": "iorate",
-  "type": "module",
-  "exports": {
-    ".": "./src/index.ts"
-  },
   "files": [
     "dist"
   ],
-  "scripts": {
-    "build": "tsc --project tsconfig.build.json",
-    "test": "node --test \"src/**/*.test.ts\""
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts"
   },
   "publishConfig": {
     "exports": {
@@ -34,5 +30,9 @@
         "default": "./dist/index.js"
       }
     }
+  },
+  "scripts": {
+    "build": "tsc --project tsconfig.build.json",
+    "test": "node --test \"src/**/*.test.ts\""
   }
 }

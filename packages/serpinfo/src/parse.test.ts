@@ -1,5 +1,6 @@
 import assert from "node:assert/strict";
 import { test } from "node:test";
+
 import { parse } from "./parse.ts";
 
 test("parse", async (t) => {

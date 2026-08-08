@@ -8,20 +8,28 @@
   ],
   "homepage": "https://github.com/ublacklist/packages/tree/main/packages/ruleset#readme",
   "bugs": "https://github.com/ublacklist/packages/issues",
+  "license": "MIT",
+  "author": "iorate",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/ublacklist/packages.git",
     "directory": "packages/ruleset"
   },
-  "license": "MIT",
-  "author": "iorate",
+  "files": [
+    "dist"
+  ],
   "type": "module",
   "exports": {
     ".": "./src/index.ts"
   },
-  "files": [
-    "dist"
-  ],
+  "publishConfig": {
+    "exports": {
+      ".": {
+        "types": "./dist/index.d.ts",
+        "default": "./dist/index.js"
+      }
+    }
+  },
   "scripts": {
     "build": "tsc --project tsconfig.build.json",
     "generate": "pnpm run \"/^generate:/\"",
@@ -40,13 +48,5 @@
   },
   "devDependencies": {
     "@lezer/generator": "1.8.0"
-  },
-  "publishConfig": {
-    "exports": {
-      ".": {
-        "types": "./dist/index.d.ts",
-        "default": "./dist/index.js"
-      }
-    }
   }
 }

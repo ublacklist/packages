@@ -5,29 +5,29 @@
   "scripts": {
     "build": "pnpm -r run build",
     "check": "pnpm run /^check:/",
-    "check:biome": "biome check",
-    "check:prettier": "prettier --check \"**/*.{md,yaml,yml}\"",
-    "check:typescript": "tsc",
+    "check:lint": "oxlint",
+    "check:format": "oxfmt --check",
     "fix": "pnpm run /^fix:/",
-    "fix:biome": "biome check --write",
-    "fix:prettier": "prettier --write \"**/*.{md,yaml,yml}\"",
+    "fix:lint": "oxlint --fix",
+    "fix:format": "oxfmt",
     "release": "pnpm -r run build && changeset publish",
     "test": "pnpm -r run test"
   },
   "devDependencies": {
-    "@biomejs/biome": "2.5.7",
     "@changesets/cli": "2.31.1",
     "@types/node": "24.13.3",
     "lefthook": "2.1.10",
-    "prettier": "3.9.6",
+    "oxfmt": "0.62.0",
+    "oxlint": "1.77.0",
+    "oxlint-tsgolint": "7.0.2001",
     "typescript": "7.0.2"
   },
-  "packageManager": "pnpm@11.20.0",
   "devEngines": {
     "runtime": {
       "name": "node",
       "version": "24.18.0",
       "onFail": "download"
     }
-  }
+  },
+  "packageManager": "pnpm@11.20.0"
 }

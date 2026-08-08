@@ -1,6 +1,8 @@
 import assert from "node:assert/strict";
 import { test } from "node:test";
+
 import { z } from "zod";
+
 import { discriminatedTupleUnion } from "./discriminated-tuple-union.ts";
 
 test("discriminatedTupleUnion", async (t) => {
