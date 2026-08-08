@@ -8,20 +8,28 @@
   ],
   "homepage": "https://github.com/ublacklist/packages/tree/main/packages/serpinfo#readme",
   "bugs": "https://github.com/ublacklist/packages/issues",
+  "license": "MIT",
+  "author": "iorate",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/ublacklist/packages.git",
     "directory": "packages/serpinfo"
   },
-  "license": "MIT",
-  "author": "iorate",
+  "files": [
+    "dist"
+  ],
   "type": "module",
   "exports": {
     ".": "./src/index.ts"
   },
-  "files": [
-    "dist"
-  ],
+  "publishConfig": {
+    "exports": {
+      ".": {
+        "types": "./dist/index.d.ts",
+        "default": "./dist/index.js"
+      }
+    }
+  },
   "scripts": {
     "build": "tsc --project tsconfig.build.json",
     "test": "node --test \"src/**/*.test.ts\""
@@ -35,13 +43,5 @@
   },
   "devDependencies": {
     "@types/css-tree": "3.2.0"
-  },
-  "publishConfig": {
-    "exports": {
-      ".": {
-        "types": "./dist/index.d.ts",
-        "default": "./dist/index.js"
-      }
-    }
   }
 }

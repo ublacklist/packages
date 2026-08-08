@@ -1,5 +1,6 @@
 import assert from "node:assert/strict";
 import { test } from "node:test";
+
 import { type ExecResult, type Props, Ruleset } from "./ruleset.ts";
 
 function _test(ruleset: Ruleset, url: string, props?: Props): boolean {

@@ -1,9 +1,10 @@
 import assert from "node:assert/strict";
 import { test } from "node:test";
+
 import { MatchPattern, MatchPatternMap } from "./index.ts";
 
 function get(map: MatchPatternMap<number>, url: string) {
-  return map.get(url).sort();
+  return map.get(url).sort((a, b) => a - b);
 }
 
 test("MatchPatternMap", async (t) => {

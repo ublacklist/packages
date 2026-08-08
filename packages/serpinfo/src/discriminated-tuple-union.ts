@@ -1,3 +1,7 @@
+/* oxlint-disable import/namespace -- The rule resolves the runtime JS of
+   "zod/v4/core" instead of its type declarations, so type-only exports like
+   `$ZodTypeDef` are falsely reported as missing.
+   https://github.com/oxc-project/oxc/issues/13258 */
 import { z } from "zod";
 import * as core from "zod/v4/core";
 import { util } from "zod/v4/core";
@@ -22,17 +26,19 @@ export type $ZodDiscriminatedTupleUnionOption = core.$ZodTuple<
 >;
 
 export interface $ZodDiscriminatedTupleUnionDef<
-  T extends
-    readonly $ZodDiscriminatedTupleUnionOption[] = readonly $ZodDiscriminatedTupleUnionOption[],
-> extends core.$ZodTypeDef {
+  T extends readonly $ZodDiscriminatedTupleUnionOption[] =
+    readonly $ZodDiscriminatedTupleUnionOption[],
+>
+  extends core.$ZodTypeDef {
   type: "custom";
   options: T;
 }
 
 export interface $ZodDiscriminatedTupleUnionInternals<
-  T extends
-    readonly $ZodDiscriminatedTupleUnionOption[] = readonly $ZodDiscriminatedTupleUnionOption[],
-> extends core.$ZodTypeInternals {
+  T extends readonly $ZodDiscriminatedTupleUnionOption[] =
+    readonly $ZodDiscriminatedTupleUnionOption[],
+>
+  extends core.$ZodTypeInternals {
   def: $ZodDiscriminatedTupleUnionDef<T>;
   isst: core.$ZodIssueInvalidType | core.$ZodIssueCustom;
   output: core.$InferUnionOutput<T[number]>;
@@ -40,9 +46,10 @@ export interface $ZodDiscriminatedTupleUnionInternals<
 }
 
 export interface $ZodDiscriminatedTupleUnion<
-  T extends
-    readonly $ZodDiscriminatedTupleUnionOption[] = readonly $ZodDiscriminatedTupleUnionOption[],
-> extends core.$ZodType {
+  T extends readonly $ZodDiscriminatedTupleUnionOption[] =
+    readonly $ZodDiscriminatedTupleUnionOption[],
+>
+  extends core.$ZodType {
   _zod: $ZodDiscriminatedTupleUnionInternals<T>;
 }
 
@@ -102,10 +109,10 @@ export type $ZodDiscriminatedTupleUnionParams = core.TypeParams<
 >;
 
 export interface ZodDiscriminatedTupleUnion<
-  T extends
-    readonly $ZodDiscriminatedTupleUnionOption[] = readonly $ZodDiscriminatedTupleUnionOption[],
-> extends z.ZodType,
-    $ZodDiscriminatedTupleUnion<T> {
+  T extends readonly $ZodDiscriminatedTupleUnionOption[] =
+    readonly $ZodDiscriminatedTupleUnionOption[],
+>
+  extends z.ZodType, $ZodDiscriminatedTupleUnion<T> {
   "~standard": z.ZodStandardSchemaWithJSON<this>;
   _zod: $ZodDiscriminatedTupleUnionInternals<T>;
   def: $ZodDiscriminatedTupleUnionDef<T>;
