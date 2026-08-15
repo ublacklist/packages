@@ -44,15 +44,8 @@ jobs:
           permission-contents: write
           permission-pull-requests: write
 
-      - name: Set git identity for tagging
-        run: |
-          git config user.name ublacklist-bot[bot]
-          git config user.email 266303437+ublacklist-bot[bot]@users.noreply.github.com
-
       - name: Create release pull request or publish
         uses: changesets/action@22ccf9aa43179fe9e27dc62e575971d28cce197c # v2.0.0
         with:
-          publish: pnpm release
-          commitMode: github-api
-        env:
-          GITHUB_TOKEN: ${{ steps.generate-token.outputs.token }}
+          github-token: ${{ steps.generate-token.outputs.token }}
+          publish-script: pnpm release
