@@ -10,11 +10,9 @@
     "fix": "pnpm run /^fix:/",
     "fix:lint": "oxlint --fix",
     "fix:format": "oxfmt",
-    "release": "pnpm -r run build && changeset publish",
     "test": "pnpm -r run test"
   },
   "devDependencies": {
-    "@changesets/cli": "3.0.0",
     "@types/node": "24.13.3",
     "lefthook": "2.1.10",
     "oxfmt": "0.63.0",
