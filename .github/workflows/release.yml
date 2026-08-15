@@ -35,6 +35,9 @@ jobs:
           run_install: true
           cache: true
 
+      - name: Setup changesette
+        uses: iorate/changesette/setup@bdcc11407fab5c629a0efa7bb76e8186f7184a76 # v3.0.0
+
       - name: Generate token
         id: generate-token
         uses: actions/create-github-app-token@bcd2ba49218906704ab6c1aa796996da409d3eb1 # v3.2.0
@@ -44,8 +47,51 @@ jobs:
           permission-contents: write
           permission-pull-requests: write
 
-      - name: Create release pull request or publish
-        uses: changesets/action@22ccf9aa43179fe9e27dc62e575971d28cce197c # v2.0.0
+      - name: Apply changesets
+        id: version
+        run: |
+          changesette version --output "$RUNNER_TEMP/plan.json"
+          if jq -e 'any(.releases[]; .type != "none")' "$RUNNER_TEMP/plan.json" > /dev/null; then
+            echo "title=Version packages" >> "$GITHUB_OUTPUT"
+            delim="$(openssl rand -hex 16)"
+            {
+              echo "body<<$delim"
+              jq -r '[.releases[] | select(.type != "none") | "## \(.name)@\(.newVersion)\n\n\(.changelogEntry)"] | join("\n\n")' "$RUNNER_TEMP/plan.json"
+              echo "$delim"
+            } >> "$GITHUB_OUTPUT"
+            pnpm install --lockfile-only
+          else
+            echo "title=Consume changesets" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Create release pull request
+        id: pr
+        uses: peter-evans/create-pull-request@5f6978faf089d4d20b00c7766989d076bb2fc7f1 # v8.1.1
         with:
-          github-token: ${{ steps.generate-token.outputs.token }}
-          publish-script: pnpm release
+          token: ${{ steps.generate-token.outputs.token }}
+          branch: changesette/release
+          commit-message: ${{ steps.version.outputs.title }}
+          title: ${{ steps.version.outputs.title }}
+          body: ${{ steps.version.outputs.body }}
+          delete-branch: true
+          sign-commits: true
+
+      - name: Publish
+        if: steps.pr.outputs.pull-request-number == ''
+        run: |
+          pnpm -r run build
+          pnpm publish -r
+          packages="$(changesette get-packages)"
+          jq -c '.[]' <<< "$packages" | while read -r package; do
+            name="$(jq -re .name <<< "$package")"
+            version="$(jq -re .version <<< "$package")"
+            if ! gh release view "$name@$version" > /dev/null 2>&1; then
+              if notes="$(changesette get-changelog-entry "$name" "$version")"; then
+                gh release create "$name@$version" \
+                  --target "$GITHUB_SHA" \
+                  --notes "$notes"
+              fi
+            fi
+          done
+        env:
+          GH_TOKEN: ${{ steps.generate-token.outputs.token }}

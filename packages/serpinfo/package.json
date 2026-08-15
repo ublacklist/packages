@@ -28,7 +28,8 @@
         "types": "./dist/index.d.ts",
         "default": "./dist/index.js"
       }
-    }
+    },
+    "access": "public"
   },
   "scripts": {
     "build": "tsc --project tsconfig.build.json",
