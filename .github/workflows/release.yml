@@ -36,7 +36,7 @@ jobs:
           cache: true
 
       - name: Setup changesette
-        uses: iorate/changesette/setup@bdcc11407fab5c629a0efa7bb76e8186f7184a76 # v3.0.0
+        uses: iorate/changesette/setup@0d22976fb72d9c6d71053d12eda47bb70ef9ad38 # v4.0.0
 
       - name: Generate token
         id: generate-token
@@ -50,13 +50,13 @@ jobs:
       - name: Apply changesets
         id: version
         run: |
-          changesette version --output "$RUNNER_TEMP/plan.json"
-          if jq -e 'any(.releases[]; .type != "none")' "$RUNNER_TEMP/plan.json" > /dev/null; then
+          plan="$(changesette version --allow-no-changesets --output -)"
+          if jq -e 'any(.releases[]; .type != "none")' <<< "$plan" > /dev/null; then
             echo "title=Version packages" >> "$GITHUB_OUTPUT"
             delim="$(openssl rand -hex 16)"
             {
               echo "body<<$delim"
-              jq -r '[.releases[] | select(.type != "none") | "## \(.name)@\(.newVersion)\n\n\(.changelogEntry)"] | join("\n\n")' "$RUNNER_TEMP/plan.json"
+              jq -r '[.releases[] | select(.type != "none") | "## \(.name)@\(.newVersion)\n\n\(.changelogEntry)"] | join("\n\n")' <<< "$plan"
               echo "$delim"
             } >> "$GITHUB_OUTPUT"
             pnpm install --lockfile-only
