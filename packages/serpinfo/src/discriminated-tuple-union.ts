@@ -2,9 +2,10 @@
    "zod/v4/core" instead of its type declarations, so type-only exports like
    `$ZodTypeDef` are falsely reported as missing.
    https://github.com/oxc-project/oxc/issues/13258 */
-import { z } from "zod";
+import * as z from "zod";
+import { ZodType } from "zod";
 import * as core from "zod/v4/core";
-import { util } from "zod/v4/core";
+import { $ZodType, util } from "zod/v4/core";
 
 function stringifyPrimitive(value: util.Primitive): string {
   if (typeof value === "bigint") {
@@ -55,8 +56,7 @@ export interface $ZodDiscriminatedTupleUnion<
 
 export const $ZodDiscriminatedTupleUnion: core.$constructor<$ZodDiscriminatedTupleUnion> =
   core.$constructor("$ZodDiscriminatedTupleUnion", (inst, def) => {
-    // @ts-expect-error TS2775 (why?)
-    core.$ZodType.init(inst, def);
+    $ZodType.init(inst, def);
     const discriminatorMap: Map<
       util.Primitive,
       $ZodDiscriminatedTupleUnionOption
@@ -112,7 +112,7 @@ export interface ZodDiscriminatedTupleUnion<
   T extends readonly $ZodDiscriminatedTupleUnionOption[] =
     readonly $ZodDiscriminatedTupleUnionOption[],
 >
-  extends z.ZodType, $ZodDiscriminatedTupleUnion<T> {
+  extends ZodType, $ZodDiscriminatedTupleUnion<T> {
   "~standard": z.ZodStandardSchemaWithJSON<this>;
   _zod: $ZodDiscriminatedTupleUnionInternals<T>;
   def: $ZodDiscriminatedTupleUnionDef<T>;
@@ -120,7 +120,7 @@ export interface ZodDiscriminatedTupleUnion<
 
 export const ZodDiscriminatedTupleUnion: core.$constructor<ZodDiscriminatedTupleUnion> =
   core.$constructor("ZodDiscriminatedTupleUnion", (inst, def) => {
-    z.ZodType.init(inst, def);
+    ZodType.init(inst, def);
     $ZodDiscriminatedTupleUnion.init(inst, def);
   });
 

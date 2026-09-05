@@ -1,6 +1,6 @@
 import { parseMatchPattern } from "@ublacklist/match-pattern";
 import * as csstree from "css-tree";
-import { z } from "zod";
+import * as z from "zod";
 
 function parseCss(value: string, context: string): csstree.CssNode | null {
   try {
