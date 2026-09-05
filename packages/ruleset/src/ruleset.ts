@@ -4,7 +4,7 @@ import {
   type MatchPatternMapJSON,
 } from "@ublacklist/match-pattern";
 import * as yaml from "js-yaml";
-import { z } from "zod";
+import * as z from "zod";
 
 import { bodyParser, parser } from "./parser.ts";
 import { Text } from "./text.ts";

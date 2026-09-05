@@ -1,4 +1,4 @@
-import { z } from "zod";
+import * as z from "zod";
 
 import { discriminatedTupleUnion } from "./discriminated-tuple-union.ts";
 import {
