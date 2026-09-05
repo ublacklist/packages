@@ -1,5 +1,17 @@
 # @ublacklist/serpinfo
 
+## 3.0.0
+
+### Major Changes
+
+- Drop invalid result definitions from `results` in non-strict mode instead of replacing them with `null`. `SerpDescription["results"]` is now `ResultDescription[]`, and the `SerpInfoStrict` type, which no longer differs from `SerpInfo`, has been removed.
+
+- Reject unknown keys in strict mode. `parse(input, { strict: true })` now fails on properties that the SERPINFO specification does not define, at every level of the document (top level, page definitions, result definitions, and button command options), so misspelled property names are reported instead of being silently ignored. Non-strict parsing is unchanged and still ignores unknown keys.
+
+### Patch Changes
+
+- Import zod as a namespace (`import * as z from "zod"`) instead of the named `z` export, so that esbuild can tree-shake unused parts of zod from consumers' bundles.
+
 ## 2.0.0
 
 ### Major Changes
