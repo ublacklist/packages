@@ -56,7 +56,10 @@ jobs:
             delim="$(openssl rand -hex 16)"
             {
               echo "body<<$delim"
-              jq -r '[.releases[] | select(.type != "none") | "## \(.name)@\(.newVersion)\n\n\(.changelogEntry)"] | join("\n\n")' <<< "$plan"
+              jq -r '[.releases[]
+                | select(.type != "none")
+                | "## \(.name)@\(.newVersion)\n\n\(.changelogEntry)"]
+              | join("\n\n")' <<< "$plan"
               echo "$delim"
             } >> "$GITHUB_OUTPUT"
             pnpm install --lockfile-only
@@ -89,6 +92,7 @@ jobs:
               if notes="$(changesette get-changelog-entry "$name" "$version")"; then
                 gh release create "$name@$version" \
                   --target "$GITHUB_SHA" \
+                  --title "$name@$version" \
                   --notes "$notes"
               fi
             fi
