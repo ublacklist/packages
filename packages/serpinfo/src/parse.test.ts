@@ -57,9 +57,13 @@ pages:
       - "*://*.example.com/*"
     results:
       - {}
+      - root: div.result
+        url: a.url
 `);
     assert.ok(result.success);
-    assert.deepEqual(result.data.pages[0]?.results, [null]);
+    assert.deepEqual(result.data.pages[0]?.results, [
+      { root: "div.result", url: "a.url" },
+    ]);
   });
 
   await t.test("rejects an invalid result in strict mode", () => {
@@ -76,5 +80,69 @@ pages:
       { strict: true },
     );
     assert.ok(!result.success);
+  });
+
+  await t.test("ignores unknown keys in non-strict mode", () => {
+    const result = parse(`
+name: Example
+unknownKey: true
+pages:
+  - name: example
+    matches:
+      - "*://*.example.com/*"
+    unknownKey: true
+    results:
+      - root: div.result
+        url: a.url
+        unknownKey: true
+        button: ["inset", { unknownKey: true }]
+`);
+    assert.ok(result.success);
+    assert.ok(!("unknownKey" in result.data));
+  });
+
+  await t.test("rejects unknown keys in strict mode", () => {
+    for (const input of [
+      `
+name: Example
+unknownKey: true
+pages: []
+`,
+      `
+name: Example
+pages:
+  - name: example
+    matches:
+      - "*://*.example.com/*"
+    unknownKey: true
+    results: []
+`,
+      `
+name: Example
+pages:
+  - name: example
+    matches:
+      - "*://*.example.com/*"
+    results:
+      - root: div.result
+        url: a.url
+        unknownKey: true
+`,
+      `
+name: Example
+pages:
+  - name: example
+    matches:
+      - "*://*.example.com/*"
+    results:
+      - root: div.result
+        url: a.url
+        button: ["inset", { unknownKey: true }]
+`,
+    ]) {
+      const result = parse(input, { strict: true });
+      assert.ok(!result.success);
+      assert.match(result.error, /Unrecognized key: "unknownKey"/);
+    }
   });
 });

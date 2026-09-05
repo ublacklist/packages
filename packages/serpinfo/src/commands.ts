@@ -101,37 +101,38 @@ export const propertyCommandSchema: z.ZodType<PropertyCommand> =
 
 /* Button Commands */
 
-export type ButtonCommand = z.infer<typeof buttonCommandSchema>;
+export type ButtonCommand = z.infer<
+  ReturnType<typeof createButtonCommandSchema>
+>;
 
-export const buttonCommandSchema = discriminatedTupleUnion([
-  z.tuple([
-    z.literal("icon"),
-    z.object({ style: cssDeclarationListSchema.optional() }).optional(),
-    elementCommandSchema.optional(),
-  ]),
-  z.tuple([
-    z.literal("inset"),
-    z
-      .object({
+export function createButtonCommandSchema(strict: boolean) {
+  const object = strict ? z.strictObject : z.object;
+  return discriminatedTupleUnion([
+    z.tuple([
+      z.literal("icon"),
+      object({ style: cssDeclarationListSchema.optional() }).optional(),
+      elementCommandSchema.optional(),
+    ]),
+    z.tuple([
+      z.literal("inset"),
+      object({
         top: cssValueSchema.or(z.literal(0)).optional(),
         right: cssValueSchema.or(z.literal(0)).optional(),
         bottom: cssValueSchema.or(z.literal(0)).optional(),
         left: cssValueSchema.or(z.literal(0)).optional(),
         zIndex: cssValueSchema.or(z.number().int()).optional(),
-      })
-      .optional(),
-    elementCommandSchema.optional(),
-  ]),
-  z.tuple([
-    z.literal("text"),
-    z
-      .object({
+      }).optional(),
+      elementCommandSchema.optional(),
+    ]),
+    z.tuple([
+      z.literal("text"),
+      object({
         position: z
           .enum(["afterbegin", "afterend", "beforebegin", "beforeend"])
           .optional(),
         style: cssDeclarationListSchema.optional(),
-      })
-      .optional(),
-    elementCommandSchema.optional(),
-  ]),
-]);
+      }).optional(),
+      elementCommandSchema.optional(),
+    ]),
+  ]);
+}
