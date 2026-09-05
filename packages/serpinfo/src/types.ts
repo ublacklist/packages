@@ -1,7 +1,7 @@
 import * as z from "zod";
 
 import {
-  buttonCommandSchema,
+  createButtonCommandSchema,
   propertyCommandSchema,
   rootCommandSchema,
 } from "./commands.ts";
@@ -17,75 +17,87 @@ const propNameSchema = z.string().regex(
   "Invalid prop name",
 );
 
-export type ResultDescription = z.infer<typeof resultDescriptionSchema>;
+export type ResultDescription = z.infer<
+  ReturnType<typeof createResultDescriptionSchema>
+>;
 
-const resultDescriptionSchema = z.object({
-  name: z.string().optional(),
-  root: rootCommandSchema,
-  url: propertyCommandSchema,
-  props: z.record(propNameSchema, propertyCommandSchema).optional(),
-  button: buttonCommandSchema.optional(),
-  preserveSpace: z.boolean().optional(),
-  extraSelector: extraSelectorSchema.optional(),
-});
+function createResultDescriptionSchema(strict: boolean) {
+  const object = strict ? z.strictObject : z.object;
+  return object({
+    name: z.string().optional(),
+    root: rootCommandSchema,
+    url: propertyCommandSchema,
+    props: z.record(propNameSchema, propertyCommandSchema).optional(),
+    button: createButtonCommandSchema(strict).optional(),
+    preserveSpace: z.boolean().optional(),
+    extraSelector: extraSelectorSchema.optional(),
+  });
+}
 
-export type SerpDescription = z.infer<typeof serpDescriptionSchema>;
+export type SerpDescription = z.infer<
+  ReturnType<typeof createSerpDescriptionSchema>
+>;
 
-const serpDescriptionSchema = z.object({
-  name: z.string(),
-  matches: matchPatternSchema.array(),
-  excludeMatches: matchPatternSchema.array().optional(),
-  includeRegex: regexSchema.optional(),
-  excludeRegex: regexSchema.optional(),
-  userAgent: z.enum(["any", "desktop", "mobile"]).optional(),
-  results: resultDescriptionSchema
-    .nullable()
-    .catch(() => null)
-    .array(),
-  commonProps: z.record(propNameSchema, z.string()).optional(),
-  delay: z.boolean().or(z.number()).optional(),
-});
-
-const personSchema = z.string().or(
-  z.object({
+function createSerpDescriptionSchema(strict: boolean) {
+  const object = strict ? z.strictObject : z.object;
+  const resultDescriptionSchema = createResultDescriptionSchema(strict);
+  return object({
     name: z.string(),
-    email: z.email().optional(),
-    url: z.url().optional(),
-  }),
-);
+    matches: matchPatternSchema.array(),
+    excludeMatches: matchPatternSchema.array().optional(),
+    includeRegex: regexSchema.optional(),
+    excludeRegex: regexSchema.optional(),
+    userAgent: z.enum(["any", "desktop", "mobile"]).optional(),
+    results: strict
+      ? resultDescriptionSchema.array()
+      : resultDescriptionSchema
+          .nullable()
+          .catch(() => null)
+          .array()
+          .transform((results) => results.filter((result) => result != null)),
+    commonProps: z.record(propNameSchema, z.string()).optional(),
+    delay: z.boolean().or(z.number()).optional(),
+  });
+}
 
-// https://github.com/colinhacks/zod/issues/61
-const bugsSchema = z
-  .url()
-  .or(z.object({ url: z.url(), email: z.email() }))
-  .or(z.object({ url: z.url(), email: z.undefined() }))
-  .or(z.object({ url: z.undefined(), email: z.email() }));
+export type SerpInfo = z.infer<ReturnType<typeof createSerpInfoSchema>>;
 
-export type SerpInfo = z.infer<typeof serpInfoSchema>;
+function createSerpInfoSchema(strict: boolean) {
+  const object = strict ? z.strictObject : z.object;
 
-export const serpInfoSchema = z.object({
-  SERPINFO_VERSION: z.literal("1.0").optional(),
+  const personSchema = z.string().or(
+    object({
+      name: z.string(),
+      email: z.email().optional(),
+      url: z.url().optional(),
+    }),
+  );
 
-  // Inspired by package.json
-  name: z.string(),
-  version: z.string().optional(),
-  description: z.string().optional(),
-  homepage: z.url().optional(),
-  bugs: bugsSchema.optional(),
-  license: z.string().optional(),
-  author: personSchema.optional(),
-  contributors: personSchema.array().optional(),
+  // https://github.com/colinhacks/zod/issues/61
+  const bugsSchema = z
+    .url()
+    .or(object({ url: z.url(), email: z.email() }))
+    .or(object({ url: z.url(), email: z.undefined() }))
+    .or(object({ url: z.undefined(), email: z.email() }));
 
-  lastModified: z.iso.datetime().optional(),
-  pages: serpDescriptionSchema.array(),
-});
+  return object({
+    SERPINFO_VERSION: z.literal("1.0").optional(),
 
-export type SerpInfoStrict = z.infer<typeof serpInfoStrictSchema>;
+    // Inspired by package.json
+    name: z.string(),
+    version: z.string().optional(),
+    description: z.string().optional(),
+    homepage: z.url().optional(),
+    bugs: bugsSchema.optional(),
+    license: z.string().optional(),
+    author: personSchema.optional(),
+    contributors: personSchema.array().optional(),
 
-export const serpInfoStrictSchema = serpInfoSchema.extend({
-  pages: serpDescriptionSchema
-    .extend({
-      results: resultDescriptionSchema.array(),
-    })
-    .array(),
-});
+    lastModified: z.iso.datetime().optional(),
+    pages: createSerpDescriptionSchema(strict).array(),
+  });
+}
+
+export const serpInfoSchema = createSerpInfoSchema(false);
+
+export const serpInfoStrictSchema = createSerpInfoSchema(true);
