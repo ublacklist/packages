@@ -13,7 +13,7 @@
     "test": "pnpm -r run test"
   },
   "devDependencies": {
-    "@types/node": "24.13.3",
+    "@types/node": "26.5.0",
     "lefthook": "2.1.12",
     "oxfmt": "0.67.0",
     "oxlint": "1.82.0",
@@ -23,7 +23,7 @@
   "devEngines": {
     "runtime": {
       "name": "node",
-      "version": "24.21.0",
+      "version": "26.8.2",
       "onFail": "download"
     }
   },
