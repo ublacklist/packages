@@ -48,6 +48,6 @@
     "zod": "^4.4.3"
   },
   "devDependencies": {
-    "@lezer/generator": "1.8.0"
+    "@lezer/generator": "1.8.1"
   }
 }
