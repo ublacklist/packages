@@ -13,19 +13,19 @@
     "test": "pnpm -r run test"
   },
   "devDependencies": {
-    "@types/node": "26.6.3",
-    "lefthook": "2.1.14",
-    "oxfmt": "0.71.0",
-    "oxlint": "1.86.0",
-    "oxlint-tsgolint": "7.0.2003",
+    "@types/node": "26.6.5",
+    "lefthook": "2.2.1",
+    "oxfmt": "0.73.0",
+    "oxlint": "1.88.0",
+    "oxlint-tsgolint": "7.0.2004",
     "typescript": "7.0.2"
   },
   "devEngines": {
     "runtime": {
       "name": "node",
-      "version": "26.10.0",
+      "version": "26.12.0",
       "onFail": "download"
     }
   },
-  "packageManager": "pnpm@12.8.1"
+  "packageManager": "pnpm@12.13.0"
 }
